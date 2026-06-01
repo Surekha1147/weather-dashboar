@@ -1,0 +1,184 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: url('./image.jpg');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: "Comfortaa", sans-serif;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* SEARCH BAR */
+.searchBar {
+  height: 70px;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchBarParentDiv {
+  width: 60%;
+  position: relative;
+}
+
+.inputfield {
+  width: 100%;
+  border-radius: 25px;
+  padding: 12px 48px 12px 20px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.searchIcon:hover {
+  opacity: 0.7;
+}
+
+/* MAIN CONTENT */
+.maincontentParentDiv {
+  min-height: calc(100vh - 70px);
+  padding: 20px;
+}
+
+/* GLASS CARDS */
+.glass-card {
+  background: rgba(120, 144, 170, 0.35);
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 18px;
+  color: #fff;
+}
+
+.glass-divider {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.leftDiv {
+  display: flex;
+}
+
+.rightDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+/* CARD TYPOGRAPHY */
+.currentCard h3 {
+  font-weight: 600;
+}
+
+.currentCard h4 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.label {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* MINI CARDS */
+.mini-card {
+  min-width: 140px;
+}
+
+/* COMING 5 DAYS */
+#comingDaysList .day-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+}
+
+#comingDaysList .temp {
+  font-weight: 600;
+}
+
+/* TODAY HOURLY */
+.hourly-wrapper {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.hourly-card {
+  min-width: 90px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.22);
+  text-align: center;
+}
+
+.hourly-time {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.hourly-temp {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* SCROLLBAR SMALLER (OPTIONAL) */
+.hourly-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hourly-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .searchBarParentDiv {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .maincontentParentDiv {
+    padding: 12px;
+  }
+
+  .glass-card {
+    padding: 14px;
+  }
+
+  .currentCard h4 {
+    font-size: 22px;
+  }
+}
+
+
+
+
+
+
+
+

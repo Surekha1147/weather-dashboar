@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Weather</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <!-- Comfortaa font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <!-- TOP SEARCH BAR -->
+  <div class="searchBar">
+    <div class="searchBarParentDiv">
+      <!-- changed placeholder text -->
+      <input id="searchInput" type="text" class="inputfield" placeholder="Search cities...">
+      <img src="./search.png" id="searchBtn" class="searchIcon" alt="Search">
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="maincontentParentDiv container-fluid">
+    <div class="row g-3">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-12 col-lg-4 d-flex flex-column gap-3 leftDiv">
+
+        <!-- CURRENT WEATHER CARD -->
+        <div class="glass-card currentCard">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <h3 id="cityName" class="mb-1">City Name</h3>
+              <h4 id="cityTemp" class="mb-1">0 °C</h4>
+              <p id="skyDesc" class="mb-0">Sky description</p>
+            </div>
+            <!-- icon for current weather -->
+            <div id="currentIcon" class="fs-1"></div>
+          </div>
+
+          <hr class="glass-divider">
+
+          <div class="d-flex align-items-center mb-2 gap-2">
+            <img src="./calendar.png" width="22" alt="">
+            <span id="dateText">Date</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <img src="./clock.png" width="22" alt="">
+            <span id="timeText">Time</span>
+          </div>
+        </div>
+
+        <!-- COMING 5 DAYS CARD -->
+        <div class="glass-card comingCard">
+          <h5 class="mb-3">Coming 5 Days</h5>
+          <div id="comingDaysList" class="d-flex flex-column gap-2">
+            <!-- JS will inject 5 rows here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-12 col-lg-8 d-flex flex-column gap-3 rightDiv">
+
+        <!-- SMALL STAT CARDS ROW -->
+        <div class="d-flex flex-wrap gap-3">
+          <div class="glass-card mini-card flex-fill">
+            <p class="label">Humidity</p>
+            <p id="humidityVal" class="value">--</p>
+          </div>
+          <div class="glass-card mini-card flex-fill">
+            <p class="label">Pressure</p>
+            <p id="pressureVal" class="value">--</p>
+          </div>
+          <div class="glass-card mini-card flex-fill">
+            <p class="label">Feels like</p>
+            <p id="feelsLikeVal" class="value">--</p>
+          </div>
+          <div class="glass-card mini-card flex-fill">
+            <p class="label">Visibility</p>
+            <p id="visibilityVal" class="value">--</p>
+          </div>
+        </div>
+
+        <!-- AQI + SUNRISE/SUNSET ROW -->
+        <div class="d-flex flex-column flex-lg-row gap-3">
+          <div class="glass-card flex-fill">
+            <h5 class="mb-3">Air Quality Index (AQI)</h5>
+            <div class="row gy-2">
+              <div class="col-6 col-md-3">
+                <p class="label">CO</p>
+                <p id="coVal" class="value">--</p>
+              </div>
+              <div class="col-6 col-md-3">
+                <p class="label">SO₂</p>
+                <p id="so2Val" class="value">--</p>
+              </div>
+              <div class="col-6 col-md-3">
+                <p class="label">O₃</p>
+                <p id="o3Val" class="value">--</p>
+              </div>
+              <div class="col-6 col-md-3">
+                <p class="label">NO₂</p>
+                <p id="no2Val" class="value">--</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card flex-fill">
+            <h5 class="mb-3">Sunrise &amp; Sunset</h5>
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="label">Sunrise</p>
+                <p id="sunriseVal" class="value">--</p>
+              </div>
+              <div>
+                <p class="label">Sunset</p>
+                <p id="sunsetVal" class="value">--</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TODAY HOURLY FORECAST -->
+        <div class="glass-card">
+          <h5 class="mb-3">Today</h5>
+          <div id="todayHourly" class="hourly-wrapper">
+            <!-- JS will inject hourly cards here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+          integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+          crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+          integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+          crossorigin="anonymous"></script>
+
+  <!-- same jQuery as in the video (even though we use fetch) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"
+          integrity="sha256-eKhayi8LEQwpAWNXc4Fh3+3q0VUTJn3Q0ZtC1WLPaXQ="
+          crossorigin="anonymous"></script>
+
+  <!-- MAIN SCRIPT -->
+  <script>
+    const API_KEY = "18410ea4d915eebde77f32eeb9b66109";   // <-- put your OpenWeather API key
+    const BASE_URL = "https://api.openweathermap.org/data/2.5";
+
+    // ---------- helper functions ----------
+    function toTitleCase(str) {
+      return str.replace(/\w\S*/g, t =>
+        t.charAt(0).toUpperCase() + t.substr(1).toLowerCase()
+      );
+    }
+
+    function formatDate(dt, tz) {
+      const ms = (dt + tz) * 1000;
+      return new Date(ms).toLocaleDateString("en-IN", {
+        day: "numeric", month: "numeric", year: "numeric"
+      });
+    }
+
+    function formatTime(dt, tz) {
+      const ms = (dt + tz) * 1000;
+      return new Date(ms).toLocaleTimeString("en-IN", {
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+      });
+    }
+
+    // weather → emoji
+    function getWeatherIcon(weatherObj) {
+      if (!weatherObj) return "☁️";
+      const main = (weatherObj.main || "").toLowerCase();
+      const desc = (weatherObj.description || "").toLowerCase();
+
+      if (main === "clear") return "☀️";
+      if (main === "rain" || main === "drizzle") return "🌧️";
+      if (main === "thunderstorm") return "⛈️";
+      if (main === "snow") return "❄️";
+      if (main === "clouds") {
+        if (desc.includes("few") || desc.includes("scattered")) return "⛅";
+        return "☁️";
+      }
+      if (["mist", "fog", "haze", "smoke", "dust"].some(k => main === k || desc.includes(k))) {
+        return "🌫️";
+      }
+      return "☁️";
+    }
+
+    // ---------- main fetch function ----------
+    async function fetchData(cityName = "Visakhapatnam") {
+      try {
+        // 1) current weather
+        const weatherRes = await fetch(
+          `${BASE_URL}/weather?q=${encodeURIComponent(cityName)}&appid=${API_KEY}&units=metric`
+        );
+        const weatherData = await weatherRes.json();
+
+        if (weatherData.cod !== 200) {
+          alert(weatherData.message || "City not found");
+          return;
+        }
+
+        // 2) forecast (5 days / 3 hours)
+        const forecastRes = await fetch(
+          `${BASE_URL}/forecast?q=${encodeURIComponent(cityName)}&appid=${API_KEY}&units=metric`
+        );
+        const forecastData = await forecastRes.json();
+
+        // 3) air pollution (AQI) by lat/lon
+        const { lat, lon } = weatherData.coord;
+        const airRes = await fetch(
+          `${BASE_URL}/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+        );
+        const airData = await airRes.json();
+
+        updateUI(weatherData, forecastData, airData);
+      } catch (err) {
+        console.error(err);
+        alert("Error while fetching data");
+      }
+    }
+
+    // ---------- UI update using JSON data ----------
+    function updateUI(weather, forecast, air) {
+      const tz = weather.timezone || 0;
+
+      // left big card
+      document.getElementById("cityName").textContent = weather.name;
+      document.getElementById("cityTemp").textContent =
+        Math.round(weather.main.temp) + " °C";
+      document.getElementById("skyDesc").textContent =
+        toTitleCase(weather.weather[0].description);
+
+      document.getElementById("dateText").textContent =
+        formatDate(weather.dt, tz);
+      document.getElementById("timeText").textContent =
+        formatTime(weather.dt, tz);
+
+      // current icon
+      document.getElementById("currentIcon").textContent =
+        getWeatherIcon(weather.weather[0]);
+
+      // small metric cards
+      document.getElementById("humidityVal").textContent =
+        weather.main.humidity + " %";
+      document.getElementById("pressureVal").textContent =
+        weather.main.pressure + " hPa";
+      document.getElementById("feelsLikeVal").textContent =
+        Math.round(weather.main.feels_like) + " °C";
+      document.getElementById("visibilityVal").textContent =
+        (weather.visibility / 1000).toFixed(1) + " km";
+
+      // sunrise & sunset
+      document.getElementById("sunriseVal").textContent =
+        formatTime(weather.sys.sunrise, tz);
+      document.getElementById("sunsetVal").textContent =
+        formatTime(weather.sys.sunset, tz);
+
+      // AQI components
+      if (air && air.list && air.list[0] && air.list[0].components) {
+        const comp = air.list[0].components;
+        document.getElementById("coVal").textContent  = comp.co.toFixed(2);
+        document.getElementById("so2Val").textContent = comp.so2.toFixed(2);
+        document.getElementById("o3Val").textContent  = comp.o3.toFixed(2);
+        document.getElementById("no2Val").textContent = comp.no2.toFixed(2);
+      }
+
+      // Coming 5 days – pick entries at 12:00:00
+      const comingDiv = document.getElementById("comingDaysList");
+      comingDiv.innerHTML = "";
+
+      const daily = {};
+      forecast.list.forEach(item => {
+        const [datePart, timePart] = item.dt_txt.split(" ");
+        if (timePart === "12:00:00") {
+          daily[datePart] = item;
+        }
+      });
+
+      Object.keys(daily).slice(0, 5).forEach(dateStr => {
+        const item = daily[dateStr];
+        const d = new Date(dateStr);
+        const dayName = d.toLocaleDateString("en-IN", { weekday: "long" });
+        const temp = Math.round(item.main.temp);
+        const icon = getWeatherIcon(item.weather[0]);
+
+        const row = document.createElement("div");
+        row.className = "day-row";
+        row.innerHTML = `
+          <div class="d-flex align-items-center gap-2">
+            <span class="weather-icon">${icon}</span>
+            <span class="temp">${temp} °C</span>
+            <span>${dayName}</span>
+          </div>
+          <span>${dateStr}</span>
+        `;
+        comingDiv.appendChild(row);
+      });
+
+      // Today hourly – first 5 forecast items
+      const hourlyDiv = document.getElementById("todayHourly");
+      hourlyDiv.innerHTML = "";
+      forecast.list.slice(0, 5).forEach(item => {
+        const time = new Date(item.dt * 1000).toLocaleTimeString("en-IN", {
+          hour: "numeric", minute: "2-digit"
+        });
+        const temp = Math.round(item.main.temp);
+        const icon = getWeatherIcon(item.weather[0]);
+
+        const card = document.createElement("div");
+        card.className = "hourly-card";
+        card.innerHTML = `
+          <div class="hourly-time">${time}</div>
+          <div class="hourly-icon">${icon}</div>
+          <div class="hourly-temp">${temp}°C</div>
+        `;
+        hourlyDiv.appendChild(card);
+      });
+    }
+
+    // ---------- events ----------
+    function handleSearch() {
+      const city = document.getElementById("searchInput").value.trim();
+      if (city) fetchData(city);
+    }
+
+    document.getElementById("searchBtn").addEventListener("click", handleSearch);
+    document.getElementById("searchInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleSearch();
+    });
+
+    // first load (default city data; input still shows "Search cities...")
+    fetchData("Visakhapatnam");
+  </script>
+
+</body>
+</html>
